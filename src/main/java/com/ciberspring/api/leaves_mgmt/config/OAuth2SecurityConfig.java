@@ -14,7 +14,7 @@ public class OAuth2SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/leaves/**").hasAnyAuthority("SCOPE_leaves.manage", "SCOPE_employees.read")
+                .requestMatchers("/leaves/**").hasAnyAuthority("SCOPE_leaves.manage")
                 .anyRequest().denyAll()
             )
             .oauth2ResourceServer(oauth2 -> oauth2
