@@ -25,7 +25,7 @@ public class OAuth2SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                // CHANGE: Allow all authenticated users (since all 5 users should access leaves)
+               
                 .requestMatchers("/leaves/**").hasAuthority("HR_LEAVES_ACCESS")
                 .anyRequest().denyAll()
             )
