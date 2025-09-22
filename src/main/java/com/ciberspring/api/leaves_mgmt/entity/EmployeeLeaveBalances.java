@@ -9,31 +9,32 @@ import jakarta.persistence.Table;
 @Table(name = "employee_leave_balances")
 public class EmployeeLeaveBalances {
 
-    @Id
-    @Column(name = "employee_id")
-    private Long employeeId;
+	@Id
+	@Column(name = "employee_id")
+	private Long employeeId;
+	@Column(name = "email")
+	private String email;
 
-    // NEW FIELD ADDED
-    @Column(name = "employee_name")
-    private String employeeName;
+	@Column(name = "employee_name")
+	private String employeeName;
 
-    @Column(name = "total_general_leaves")
-    private Integer totalGeneralLeaves = 12;
+	@Column(name = "total_general_leaves")
+	private Integer totalGeneralLeaves = 12;
 
-    @Column(name = "total_privilege_leaves")
-    private Integer totalPrivilegeLeaves = 12;
+	@Column(name = "total_privilege_leaves")
+	private Integer totalPrivilegeLeaves = 12;
 
-    @Column(name = "total_restricted_holidays")
-    private Integer totalRestrictedHolidays = 2;
+	@Column(name = "total_restricted_holidays")
+	private Integer totalRestrictedHolidays = 2;
 
-    @Column(name = "general_leaves_availed")
-    private Integer generalLeavesAvailed = 0;
+	@Column(name = "general_leaves_availed")
+	private Integer generalLeavesAvailed = 0;
 
-    @Column(name = "privilege_leaves_availed")
-    private Integer privilegeLeavesAvailed = 0;
+	@Column(name = "privilege_leaves_availed")
+	private Integer privilegeLeavesAvailed = 0;
 
-    @Column(name = "restricted_holidays_availed")
-    private Integer restrictedHolidaysAvailed = 0;
+	@Column(name = "restricted_holidays_availed")
+	private Integer restrictedHolidaysAvailed = 0;
 
 	public Long getEmployeeId() {
 		return employeeId;
@@ -99,6 +100,12 @@ public class EmployeeLeaveBalances {
 		this.restrictedHolidaysAvailed = restrictedHolidaysAvailed;
 	}
 
-   
-    
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 }
