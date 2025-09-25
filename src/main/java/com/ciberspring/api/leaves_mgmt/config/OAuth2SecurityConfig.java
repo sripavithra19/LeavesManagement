@@ -19,43 +19,35 @@ import java.util.stream.Collectors;
 @EnableWebSecurity
 public class OAuth2SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/localholidaylist/**").authenticated()
-                .requestMatchers("/myLeaves/**").authenticated()
-                .requestMatchers("/AllLeaveBalance/**").hasAuthority("HR_EMPLOYEES_ACCESS")
-                .anyRequest().denyAll()
-            )
-            .oauth2ResourceServer(oauth2 -> oauth2
-                .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
-            );
-        return http.build();
-    }
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/localholidaylist/**").authenticated()
+				.requestMatchers("/myLeaves/**").authenticated().requestMatchers("/AllLeaveBalance/**")
+				.hasAuthority("HR_EMPLOYEES_ACCESS").anyRequest().denyAll()).oauth2ResourceServer(
+						oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
+		return http.build();
+	}
 
-    private JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-        converter.setJwtGrantedAuthoritiesConverter(this::extractAuthorities);
-        return converter;
-    }
+	private JwtAuthenticationConverter jwtAuthenticationConverter() {
+		JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+		converter.setJwtGrantedAuthoritiesConverter(this::extractAuthorities);
+		return converter;
+	}
 
-    private Collection<GrantedAuthority> extractAuthorities(Jwt jwt) {
-        // Extract groups from the token
-        List<String> groups = jwt.getClaimAsStringList("groups");
-        
-        System.out.println("=== EXTRACTING AUTHORITIES FROM JWT ===");
-        System.out.println("All claims: " + jwt.getClaims());
-        System.out.println("Groups found: " + groups);
-        
-        if (groups == null || groups.isEmpty()) {
-            System.out.println("No groups found in token!");
-            return Collections.emptyList();
-        }
-        
-        // Convert group names to authorities
-        return groups.stream()
-            .map(group -> new SimpleGrantedAuthority(group))
-            .collect(Collectors.toList());
-    }
+	private Collection<GrantedAuthority> extractAuthorities(Jwt jwt) {
+		// Extract groups from the token
+		List<String> groups = jwt.getClaimAsStringList("groups");
+
+		System.out.println("=== EXTRACTING AUTHORITIES FROM JWT ===");
+		System.out.println("All claims: " + jwt.getClaims());
+		System.out.println("Groups found: " + groups);
+
+		if (groups == null || groups.isEmpty()) {
+			System.out.println("No groups found in token!");
+			return Collections.emptyList();
+		}
+
+		// Convert group names to authorities
+		return groups.stream().map(group -> new SimpleGrantedAuthority(group)).collect(Collectors.toList());
+	}
 }
