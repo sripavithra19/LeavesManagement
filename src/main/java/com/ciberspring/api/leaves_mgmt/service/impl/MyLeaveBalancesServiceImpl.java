@@ -23,6 +23,7 @@ public class MyLeaveBalancesServiceImpl implements MyLeaveBalancesService {
 
 	@Override
 	public EmployeeLeaveBalances getLeavesByEmail(String email) {
+		System.out.println("=== LEAVES SERVICE DEBUG ===");
 	    System.out.println("=== LEAVES SERVICE DEBUG ===");
 	    System.out.println("Received email: '" + email + "'");
 	    
